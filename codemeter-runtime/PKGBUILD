@@ -1,11 +1,11 @@
-# Maintainer: Your Name <your.email@example.com> (based on AUR codemeter-runtime by Maarten de Vries <maarten@de-vri.es>)
+# Maintainer: Orange Pig <fltbg@outlook.com> (based on AUR codemeter-runtime by Maarten de Vries <maarten@de-vri.es>)
 
 pkgname=codemeter-runtime
 pkgver=7.51.5429.500
 pkgrel=1
 pkgdesc='CodeMeter runtime (server and CLI tools, no GUI)'
 license=('custom')
-url='https://www.wibu.com/products/codemeter/runtime.html'
+url='https://www.wibu.com/support/user/user-software.html'
 
 arch=(x86_64)
 backup=('etc/wibu/CodeMeter/Server.ini')
