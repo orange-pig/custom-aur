@@ -1,0 +1,66 @@
+# Maintainer: Your Name <your.email@example.com> (based on AUR codemeter-runtime by Maarten de Vries <maarten@de-vri.es>)
+
+pkgname=codemeter-runtime
+pkgver=7.51.5429.500
+pkgrel=1
+pkgdesc='CodeMeter runtime (server and CLI tools, no GUI)'
+license=('custom')
+url='https://www.wibu.com/products/codemeter/runtime.html'
+
+arch=(x86_64)
+backup=('etc/wibu/CodeMeter/Server.ini')
+install="$pkgname.install"
+
+depends=(
+	'glibc' 'gcc-libs' 'zlib' 'libusb' 'procps-ng' 'curl' 'fakeroot'
+)
+
+source=(
+	"codemeter-lite_7.51.5429.500_amd64.deb"  # Download from Wibu-Systems or place locally; replace with URL if available
+	"codemeter.service"
+        "codemeter-webadmin.service"  # Optional: remove if not needed
+	"sysusers.conf"
+)
+
+sha512sums=(
+	'57dd60fc817f7568df549c10817ecb279bf8c7e08fa4186c56de60b9661008a8aefb5b047fbca79e888960dc696dd910218865ce824c87e36b337a3f2923e51a'  # Replace with actual sha512sum of the .deb file: run 'sha512sum codemeter-lite_7.51.5429.500_amd64.deb'
+	'c1e8b11cd1f32bce645592ba14a4b14a46fa743aa705f149bdcf7e60f809f18407935fd431b10f1d61d25fe361061cb77b5974a4c7b769eec0f89d6502d295f9'
+	'e1958067717926d29011cf68ebaaa8ccd6bfcdc960d41e3653b7a7fca266df81878ab2457211e31310c2afd60c5ac6ee60d2a9ea32fa1a5a4f4725b1a865e2cb'
+	'0acee8febd3f5763ee493c42fbd1a435b1c2572e9cab68c9da81f858dd6c7d4d5aad88deffd5b454b95f0e7492faf786f779c4c883b20ff8ea4e7006f2c3a46b'
+)
+
+prepare() {
+	bsdtar -xf data.tar.*
+}
+
+package() {
+	install -d "$pkgdir/etc"
+	install -d "$pkgdir/usr/bin"
+	install -d "$pkgdir/usr/lib"
+	install -d "$pkgdir/usr/share"
+	install -d "$pkgdir/var/lib"
+	install -d "$pkgdir/var/log"
+	install -d "$pkgdir/usr/lib/udev/rules.d"
+	install -d "$pkgdir/usr/lib/systemd/system"
+
+	# Created by CodeMeterLin -x on Debian.
+	install -d "$pkgdir/var/spool/ctmp"
+
+	cp -a "$srcdir/etc/wibu"                   "$pkgdir/etc/"
+	cp -a "$srcdir/usr/bin/"*                  "$pkgdir/usr/bin/"
+	cp -a "$srcdir/usr/sbin/"*                 "$pkgdir/usr/bin/"
+	cp -a "$srcdir/usr/lib/x86_64-linux-gnu/"* "$pkgdir/usr/lib/"
+	cp -a "$srcdir/usr/share/"*                "$pkgdir/usr/share/"
+	cp -a "$srcdir/var/lib/CodeMeter"          "$pkgdir/var/lib/"
+	cp -a "$srcdir/var/log/CodeMeter"          "$pkgdir/var/log/"
+	cp -a "$srcdir/lib/udev/rules.d/"*         "$pkgdir/usr/lib/udev/rules.d/"
+	# Not use official service
+    # cp -a "$srcdir/lib/systemd/system/"*       "$pkgdir/usr/lib/systemd/system/"  # Copy official services
+
+	ln -fs '/usr/share/licenses/common/LGPL2.1/license.txt' "$pkgdir/usr/share/doc/CodeMeter/lgpl-2.1.txt"
+
+	install -D "$srcdir/codemeter.service" "$pkgdir/usr/lib/systemd/system/codemeter.service"
+    install -D "$srcdir/codemeter-webadmin.service" "$pkgdir/usr/lib/systemd/system/codemeter-webadmin.service"
+	
+    install -D "$srcdir/sysusers.conf"     "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+}

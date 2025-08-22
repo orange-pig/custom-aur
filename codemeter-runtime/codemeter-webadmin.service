@@ -1,0 +1,11 @@
+[Unit]
+Description=CodeMeter WebAdmin
+After=network.target codemeter.service
+
+[Service]
+User=codemeter
+ExecStart=/usr/bin/CmWebAdmin
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
