@@ -1,0 +1,7 @@
+
+# makepkg
+pkg
+src
+*.deb
+*.rpm
+*.pkg.tar.zst
