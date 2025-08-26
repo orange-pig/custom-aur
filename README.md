@@ -1,5 +1,14 @@
 # custom-aur
+
 Some AUR PKGBUILD files repository
+
+build:
+
+    makepkg -s
+
+install:
+
+    sudo pacman -U xxxx.pkg.tar.zst
 
 ## codemeter-runtime
 
