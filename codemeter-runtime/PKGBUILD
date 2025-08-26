@@ -18,7 +18,7 @@ depends=(
 source=(
 	"codemeter-lite_7.51.5429.500_amd64.deb"  # Download from Wibu-Systems or place locally; replace with URL if available
 	"codemeter.service"
-        "codemeter-webadmin.service"  # Optional: remove if not needed
+	"codemeter-webadmin.service"  # Optional: remove if not needed
 	"sysusers.conf"
 )
 
